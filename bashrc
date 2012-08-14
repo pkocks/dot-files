@@ -75,9 +75,6 @@ alias grep='grep --color=AUTO'
 alias fgrep='fgrep --color=AUTO'
 
 
-# Turn off XON/XOFF process control to make <CTRL-s> not hang VIM and Command-T
-# See: https://wincent.com/forums/command-t/topics/430
-stty -ixon
 export TERM=xterm-256color
 
 
@@ -138,28 +135,6 @@ if [ -f /etc/bash_completion ] && ! shopt -oq posix; then
 fi
 
 
-
-cd $HOME
-#
-# terminal multiplexer (tmux).  make it easier to only have one session.
-#
-tmux_start () 
-{
-	(TERM=xterm-256color tmux attach || TERM=xterm-256color tmux new)
-        logout
-}
-
-if [[ $SSH_CONNECTION != "" && "$MY_SSH_CONNECTION" != "yes" ]]; then
-    while true; do
-        echo -n "Do you want to attach to a tmux session? [y/n] : " 
-        read yn
-        case $yn in
-            [Yy]* ) MY_SSH_CONNECTION="yes" tmux_start ; break;;
-            [Nn]* ) break;;
-            * ) echo "Please answer [y/n]\: ";;
-        esac
-    done
-fi 
 #
 # NOTHING BELOW THIS LINE
 #
