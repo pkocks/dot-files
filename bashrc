@@ -75,9 +75,6 @@ alias grep='grep --color=AUTO'
 alias fgrep='fgrep --color=AUTO'
 
 
-# Turn off XON/XOFF process control to make <CTRL-s> not hang VIM and Command-T
-# See: https://wincent.com/forums/command-t/topics/430
-stty -ixon
 export TERM=xterm-256color
 
 
@@ -136,6 +133,4 @@ if [ -d '/usr/share/man' ] ; then export MANPATH="$MANPATH:/usr/share/man"; fi
 if [ -f /etc/bash_completion ] && ! shopt -oq posix; then
     . /etc/bash_completion
 fi
-
-
 
