@@ -1,14 +1,6 @@
 #!/usr/bin/env bash
 #
 cd $HOME
-if [ -f .bashrc ] ; then mv -n .bashrc .bashrc-old ; fi
-ln -Ffs dot-files/bashrc .bashrc
-
-if [ -f .bash_profile ] ; then mv -n .bash_profile .bash_profile-old ; fi
-ln -Ffs dot-files/bash_profile .bash_profile
-
-if [ -f .gitignore_global ] ; then mv -n .gitignore_global .gitignore_global-old ; fi
-ln -Ffs dot-files/gitignore_global .gitignore_global
 
 if [ -f .vimrc ] ; then mv -n .vimrc .vimrc-old ; fi 
 ln -Ffs dot-files/vimrc .vimrc 

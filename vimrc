@@ -24,14 +24,13 @@ set t_Co=256
 " g:solarized_termcolors= 16 | 256 
 let g:solarized_termcolors=256
 " g:solarized_termtrans = 0 | 1 
-let g:solarized_termtrans=1
+let g:solarized_termtrans=0
 " g:solarized_degrade = 0 | 1 
 " g:solarized_bold = 1 | 0 
 " g:solarized_underline = 1 | 0 
 " g:solarized_italic = 1 | 0 
-" g:solarized_contrast = “normal”| “high” or “low” 
-" g:solarized_visibility= “normal”| “high” or “low”
-call togglebg#map("<leader>l")
+let g:solarized_contrast="high"
+let g:solarized_visibility="high"
 colorscheme solarized
 
 
@@ -87,6 +86,10 @@ let g:EnhCommentifyUseBlockIndex = 'Yes'
 set laststatus=2
 let g:obviousModeInsertHi = 'term=reverse ctermbg=1'
 
+" clang complete
+let g:clang_snippets = 1
+let g:clang_snippets_engine = 'snipmate'
+
 " tags
 set tags+=~/.vim/tags/cpp
 
@@ -97,7 +100,9 @@ autocmd FileType html set omnifunc=htmlcomplete#CompleteTags
 autocmd FileType css set omnifunc=csscomplete#CompleteCSS
 autocmd FileType xml set omnifunc=xmlcomplete#CompleteTags
 autocmd FileType php set omnifunc=phpcomplete#CompletePHP
-autocmd FileType c set omnifunc=ccomplete#Complete
+" autocmd FileType c set omnifunc=ccomplete#Complete
+
+filetype plugin on
 
 
 " Open and close all the three plugins on the same time 
@@ -158,6 +163,8 @@ nnoremap <C-l> 10l
 " move to next buffer on the screen quickly
 nnoremap <leader>h :bnext<CR>
 
+nmap <leader>n :NERDTreeToggle<CR>
+nmap <leader>nt :NERDTree 
 
 " Set paste mode
 nnoremap <leader>v :set invpaste paste?<CR>
