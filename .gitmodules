@@ -16,9 +16,6 @@
 [submodule "vim/bundle/timestamp"]
 	path = vim/bundle/timestamp
 	url = git://github.com/vim-scripts/timestamp.vim.git
-[submodule "vim/bundle/snipmate"]
-	path = vim/bundle/snipmate
-	url = git://github.com/msanders/snipmate.vim.git
 [submodule "vim/bundle/vim-javascript"]
 	path = vim/bundle/vim-javascript
 	url = git://github.com/pangloss/vim-javascript.git
