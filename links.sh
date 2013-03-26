@@ -5,6 +5,9 @@ cd $HOME
 if [ -f .vimrc ] ; then mv -n .vimrc .vimrc-old ; fi 
 ln -Ffs dot-files/vimrc .vimrc 
 
+if [ -f .gvimrc ] ; then mv -n .gvimrc .gvimrc-old ; fi 
+ln -Ffs dot-files/gvimrc .gvimrc 
+
 if [ -d .vim ] ; then mv -n .vim .vim-old ; fi
 ln -Ffs dot-files/vim .vim
 

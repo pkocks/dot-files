@@ -1,8 +1,8 @@
 
 set nocompatible
 
-set viminfo='1000,%
 set runtimepath+=~/dotfiles/vim/vim/ultisnips_rep 
+set viminfo='1000,%
 
 " Use Pathogen to manage plugins
 call pathogen#infect()
@@ -151,10 +151,6 @@ let g:EnhCommentifyUseBlockIndex = 'Yes'
 set laststatus=2
 let g:obviousModeInsertHi = 'term=reverse ctermbg=1'
 
-" clang complete
-let g:clang_snippets = 0
-" let g:clang_snippets_engine = 'snipmate'
-
 " tags
 set tags+=~/.vim/tags/cpp
 
@@ -167,12 +163,28 @@ autocmd FileType xml set omnifunc=xmlcomplete#CompleteTags
 autocmd FileType php set omnifunc=phpcomplete#CompletePHP
 " autocmd FileType c set omnifunc=ccomplete#Complete
 
+" If you prefer the Omni-Completion tip window to close when a selection is
+" made, these lines close it on movement in insert mode or when leaving
+" insert mode
+autocmd CursorMovedI * if pumvisible() == 0|pclose|endif
+autocmd InsertLeave * if pumvisible() == 0|pclose|endif
+
 filetype plugin on
 
-" SuperTab
-" let g:SuperTabDefaultCompletionType = "context"
-" the next line is wrong... not sure why
-" let g:SuperTabLongestHighlight 1
+" You Complete Me
+let g:ycm_key_list_select_completion = ['<TAB>', '<Down>']
+
+" UltiSnips.
+" I always use ListSnippets, and reserve <tab> for You Complete Me.  The
+" regulare UltiSnips is move from <tab> to the randomly choose <c-7>
+let g:UltiSnipsExpandTrigger="<c-7>"
+let g:UltiSnipsListSnippets = '<c-\>'
+let g:UltiSnipsJumpForwardTrigger = '<c-j>'
+let g:UltiSnipsJumpBackwardTrigger = '<c-k>'
+" no remap just so I'm sure it works in every context
+inoremap <c-\> <C-R>=UltiSnips_ListSnippets()<CR>
+nnoremap <c-\> :UltiSnipsEdit<CR>
+
 
 " Open and close all the three plugins on the same time 
 " nmap <F8>   :TrinityToggleAll<CR> 
@@ -236,10 +248,18 @@ nmap <leader>n :NERDTreeToggle<CR>
 nmap <leader>nt :NERDTree 
 
 " Set paste mode
-nnoremap <leader>v :set invpaste paste?<CR>
+nnoremap <leader>v :set invpaste paste?<cr>
 set pastetoggle=<leader>v
 set showmode
 
+" fix undo / redo into something more sensible
+" exe "" is a noop
+nnoremap <silent> u :exe ""<cr>
+nnoremap <silent> <leader>u :undo<cr>
+nnoremap <silent> <leader>r :redo<cr>
+
+" scratch buffer
+nnoremap <silent> <leader>b :Sscratch<cr>
 
 " finally change directory
 cd ~/Code
