@@ -75,11 +75,15 @@ nnoremap <leader><space> :noh<cr>
 " make it easy to switch to last buffer
 :nmap <Leader>3 :e #<cr>
 
-:nmap <leader>t :tabs<CR>
+nnoremap <silent> <leader>t :tabs<CR>
 :nmap <leader><Tab> :tabn<CR>
 :nmap <leader><S-Tab> :tabp<CR>
 :nmap <leader>tm :tabmove
-:nmap <leader>tn :tabnew
+:nmap <leader>tn :tabnew<cr>
+:nmap <leader>ts :tab split<cr>
+
+" Save all
+nnoremap <leader>w :wa!<cr>
 
 
 " Fuzzy
@@ -87,48 +91,54 @@ let g:fuf_modesDisable = []
 let g:fuf_mrufile_maxItem = 400
 let g:fuf_mrucmd_maxItem = 400
 let g:fuf_maxMenuWidth = 200
+
+let g:fuf_keyOpen = '<CR>'
+let g:fuf_keyOpenSplit = '<C-j>'
+let g:fuf_keyOpenVsplit = '<C-k>'
+let g:fuf_keyOpenTabpage = '<C-l>'
+
 " let g:fuf_coveragefile_globPatterns = ['~/Code/**/*','~/Code/**/.*',
 let g:fuf_coveragefile_globPatterns = ['~/Code/lift/**/*','~/.*','/opt/local/etc/**/*','/usr/include/**', '~/dot-files/**/*','~/dot-files/**/.*']
-nnoremap <silent> sb     :FufBuffer<CR>
-nnoremap <silent> sk     :FufFileWithCurrentBufferDir<CR>
-nnoremap <silent> sK     :FufFileWithFullCwd<CR>
-nnoremap <silent> s<C-k> :FufFile<CR>
-nnoremap <silent> sc     :FufCoverageFile<CR>
-nnoremap <silent> sC     :FufCoverageFileChange<CR>
-nnoremap <silent> s<C-l> :FufCoverageFileRegister<CR>
-nnoremap <silent> sd     :FufDirWithCurrentBufferDir<CR>
-nnoremap <silent> sD     :FufDirWithFullCwd<CR>
-nnoremap <silent> s<C-d> :FufDir<CR>
-nnoremap <silent> sn     :FufMruFile<CR>
-nnoremap <silent> sN     :FufMruFileInCwd<CR>
-nnoremap <silent> sm     :FufMruCmd<CR>
-nnoremap <silent> su     :FufBookmarkFile<CR>
-nnoremap <silent> s<C-u> :FufBookmarkFileAdd<CR>
-vnoremap <silent> s<C-u> :FufBookmarkFileAddAsSelectedText<CR>
-nnoremap <silent> si     :FufBookmarkDir<CR>
-nnoremap <silent> s<C-i> :FufBookmarkDirAdd<CR>
-nnoremap <silent> st     :FufTag<CR>
-nnoremap <silent> sT     :FufTag!<CR>
-nnoremap <silent> s<C-]> :FufTagWithCursorWord!<CR>
-nnoremap <silent> s,     :FufBufferTag<CR>
-nnoremap <silent> s<     :FufBufferTag!<CR>
-vnoremap <silent> s,     :FufBufferTagWithSelectedText!<CR>
-vnoremap <silent> s<     :FufBufferTagWithSelectedText<CR>
-nnoremap <silent> s}     :FufBufferTagWithCursorWord!<CR>
-nnoremap <silent> s.     :FufBufferTagAll<CR>
-nnoremap <silent> s>     :FufBufferTagAll!<CR>
-vnoremap <silent> s.     :FufBufferTagAllWithSelectedText!<CR>
-vnoremap <silent> s>     :FufBufferTagAllWithSelectedText<CR>
-nnoremap <silent> s]     :FufBufferTagAllWithCursorWord!<CR>
-nnoremap <silent> sg     :FufTaggedFile<CR>
-nnoremap <silent> sG     :FufTaggedFile!<CR>
-nnoremap <silent> so     :FufJumpList<CR>
-nnoremap <silent> sp     :FufChangeList<CR>
-nnoremap <silent> sq     :FufQuickfix<CR>
-nnoremap <silent> sl     :FufLine<CR>
-nnoremap <silent> sh     :FufHelp<CR>
-nnoremap <silent> se     :FufEditDataFile<CR>
-nnoremap <silent> sr     :FufRenewCache<CR>
+nnoremap <silent> <leader>fb     :FufBuffer<CR>
+nnoremap <silent> <leader>fk     :FufFileWithCurrentBufferDir<CR>
+nnoremap <silent> <leader>fK     :FufFileWithFullCwd<CR>
+nnoremap <silent> <leader>ff      :FufFile<CR>
+nnoremap <silent> <leader>fc     :FufCoverageFile<CR>
+nnoremap <silent> <leader>fC     :FufCoverageFileChange<CR>
+nnoremap <silent> <leader>f<C-l> :FufCoverageFileRegister<CR>
+nnoremap <silent> <leader>fd     :FufDirWithCurrentBufferDir<CR>
+nnoremap <silent> <leader>fD     :FufDirWithFullCwd<CR>
+nnoremap <silent> <leader>f<C-d> :FufDir<CR>
+nnoremap <silent> <leader>fn     :FufMruFile<CR>
+nnoremap <silent> <leader>fN     :FufMruFileInCwd<CR>
+nnoremap <silent> <leader>fm     :FufMruCmd<CR>
+nnoremap <silent> <leader>fu     :FufBookmarkFile<CR>
+nnoremap <silent> <leader>f<C-u> :FufBookmarkFileAdd<CR>
+vnoremap <silent> <leader>f<C-u> :FufBookmarkFileAddAsSelectedText<CR>
+nnoremap <silent> <leader>fi     :FufBookmarkDir<CR>
+nnoremap <silent> <leader>f<C-i> :FufBookmarkDirAdd<CR>
+nnoremap <silent> <leader>ft     :FufTag<CR>
+nnoremap <silent> <leader>fT     :FufTag!<CR>
+nnoremap <silent> <leader>f<C-]> :FufTagWithCursorWord!<CR>
+nnoremap <silent> <leader>f,     :FufBufferTag<CR>
+nnoremap <silent> <leader>f<     :FufBufferTag!<CR>
+vnoremap <silent> <leader>f,     :FufBufferTagWithSelectedText!<CR>
+vnoremap <silent> <leader>f<     :FufBufferTagWithSelectedText<CR>
+nnoremap <silent> <leader>f}     :FufBufferTagWithCursorWord!<CR>
+nnoremap <silent> <leader>f.     :FufBufferTagAll<CR>
+nnoremap <silent> <leader>f>     :FufBufferTagAll!<CR>
+vnoremap <silent> <leader>f.     :FufBufferTagAllWithSelectedText!<CR>
+vnoremap <silent> <leader>f>     :FufBufferTagAllWithSelectedText<CR>
+nnoremap <silent> <leader>f]     :FufBufferTagAllWithCursorWord!<CR>
+nnoremap <silent> <leader>fg     :FufTaggedFile<CR>
+nnoremap <silent> <leader>fG     :FufTaggedFile!<CR>
+nnoremap <silent> <leader>fo     :FufJumpList<CR>
+nnoremap <silent> <leader>fp     :FufChangeList<CR>
+nnoremap <silent> <leader>fq     :FufQuickfix<CR>
+nnoremap <silent> <leader>fl     :FufLine<CR>
+nnoremap <silent> <leader>fh     :FufHelp<CR>
+nnoremap <silent> <leader>fe     :FufEditDataFile<CR>
+nnoremap <silent> <leader>fr     :FufRenewCache<CR>
 
 " Turn on mouse support in xterm
 set mouse=a
@@ -254,12 +264,26 @@ set showmode
 
 " fix undo / redo into something more sensible
 " exe "" is a noop
-nnoremap <silent> u :exe ""<cr>
+" nnoremap <silent> u :exe ""<cr>
 nnoremap <silent> <leader>u :undo<cr>
 nnoremap <silent> <leader>r :redo<cr>
 
 " scratch buffer
 nnoremap <silent> <leader>b :Sscratch<cr>
+
+" fugitive -- git
+nnoremap <leader>g :Gstatus<cr>
+nnoremap <leader>gd :Gdiff<cr>
+nnoremap <leader>gr :Gread
+nnoremap <leader>gl :Glog<cr>
+nnoremap <leader>gL :Glog -- %<cr>
+nnoremap <leader>gb :Gbrowse<cr>
+nnoremap [q     :cprevious
+nnoremap ]q     :cnext
+nnoremap [Q     :cfirst
+nnoremap ]Q     :clast
+" copy filename of current file into the unnamed register
+nnoremap <leader>gc :let @" = expand("%")<cr>
 
 " finally change directory
 cd ~/Code
