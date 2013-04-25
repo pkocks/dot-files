@@ -70,7 +70,7 @@ endif
 nnoremap <leader><space> :noh<cr>
 
 " Easy to display Yank Ring
-:nnoremap <silent> <F10> :YRShow<CR>
+:nnoremap <silent> <leader>y :YRShow<CR>
 
 " make it easy to switch to last buffer
 :nmap <Leader>3 :e #<cr>
@@ -81,6 +81,10 @@ nnoremap <silent> <leader>t :tabs<CR>
 :nmap <leader>tm :tabmove
 :nmap <leader>tn :tabnew<cr>
 :nmap <leader>ts :tab split<cr>
+
+" TagList
+:nmap <leader>tl :TlistToggle<CR>
+let g:Tlist_Auto_Open = 1
 
 " Save all
 nnoremap <leader>w :wa!<cr>
