@@ -83,8 +83,10 @@ nnoremap <silent> <leader>t :tabs<CR>
 :nmap <leader>ts :tab split<cr>
 
 " TagList
-:nmap <leader>tl :TlistToggle<CR>
-let g:Tlist_Auto_Open = 1
+:nmap <leader>tl :TagbarToggle<CR>
+let g:tagbar_left = 1
+let g:tagbar_width = 30
+let g:tagbar_autofocus = 1
 
 " Save all
 nnoremap <leader>w :wa!<cr>
@@ -102,7 +104,7 @@ let g:fuf_keyOpenVsplit = '<C-k>'
 let g:fuf_keyOpenTabpage = '<C-l>'
 
 " let g:fuf_coveragefile_globPatterns = ['~/Code/**/*','~/Code/**/.*',
-let g:fuf_coveragefile_globPatterns = ['~/Code/lift/**/*','~/.*','/opt/local/etc/**/*','/usr/include/**', '~/dot-files/**/*','~/dot-files/**/.*']
+" let g:fuf_coveragefile_globPatterns = ['~/Code/lift/**/*','~/.*','/opt/local/etc/**/*','/usr/include/**', '~/dot-files/**/*','~/dot-files/**/.*']
 nnoremap <silent> <leader>fb     :FufBuffer<CR>
 nnoremap <silent> <leader>fk     :FufFileWithCurrentBufferDir<CR>
 nnoremap <silent> <leader>fK     :FufFileWithFullCwd<CR>
@@ -148,10 +150,14 @@ nnoremap <silent> <leader>fr     :FufRenewCache<CR>
 set mouse=a
 
 " Turn on relative number support
-" set relativenumber
+set relativenumber
 
 " Turn on undo file
-" set undofile
+if isdirectory($HOME . '/tmp/.vim/undo') == 0
+    :silent !mkdir -p ~/tmp/.vim/undo > /dev/null 2>&1
+endif
+set undodir=~/tmp/.vim/undo//
+set undofile
 
 
 " Commenting with EnhancedCommentify
