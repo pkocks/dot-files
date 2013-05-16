@@ -1,12 +1,27 @@
 #!/usr/bin/env bash
 #
 cd $HOME
+if [ -f .bashrc ] ; then mv -n .bashrc .bashrc-old ; fi
+ln -Ffs dot-files/bashrc .bashrc
+
+
+if [ -f .bash_profile ] ; then mv -n .bash_profile .bash_profile-old ; fi
+ln -Ffs dot-files/bash_profile .bash_profile
+
+if [ -f .astylerc ] ; then mv -n .astylerc .astylerc-old ; fi
+ln -Ffs dot-files/astylerc .astylerc
+
+if [ -f .screenrc ] ; then mv -n .screenrc .screenrc-old ; fi
+ln -Ffs dot-files/screenrc .screenrc
+
+if [ -f .ssh/config ] ; then mv -n .ssh/config .ssh/config-old ; fi
+ln -Ffs $HOME/dot-files/ssh-config .ssh/config
+
+if [ -f .gitignore_global ] ; then mv -n .gitignore_global .gitignore_global-old ; fi
+ln -Ffs dot-files/gitignore_global .gitignore_global
 
 if [ -f .vimrc ] ; then mv -n .vimrc .vimrc-old ; fi 
 ln -Ffs dot-files/vimrc .vimrc 
-
-if [ -f .gvimrc ] ; then mv -n .gvimrc .gvimrc-old ; fi 
-ln -Ffs dot-files/gvimrc .gvimrc 
 
 if [ -d .vim ] ; then mv -n .vim .vim-old ; fi
 ln -Ffs dot-files/vim .vim

@@ -1,0 +1,8 @@
+mode=c
+convert-tabs
+indent=spaces=4
+brackets=linux
+indent-switches
+max-instatement-indent=40
+keep-one-line-statements
+keep-one-line-blocks

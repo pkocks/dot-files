@@ -8,47 +8,37 @@ if [ -f /etc/bashrc ]; then
         . /etc/bashrc
 fi
 
-# don't put duplicate lines in the history. See bash(1) for more options
-# ... or force ignoredups and ignorespace
-HISTCONTROL=ignoredups:ignorespace
+# for safety, i like the default to only be visible to me and then adjust manually later
+umask 0022
 
-# append to the history file, don't overwrite it
-shopt -s histappend
 
-# for setting history length see HISTSIZE and HISTFILESIZE in bash(1)
-HISTSIZE=1000
-HISTFILESIZE=2000
+#####
+# Z is the new J
+# . ~/tools/z.sh
 
-# check the window size after each command and, if necessary,
-# update the values of LINES and COLUMNS.
-shopt -s checkwinsize
-
-# make less more friendly for non-text input files, see lesspipe(1)
-[ -x /usr/bin/lesspipe ] && eval "$(SHELL=/bin/sh lesspipe)"
-
-# set variable identifying the chroot you work in (used in the prompt below)
-if [ -z "$debian_chroot" ] && [ -r /etc/debian_chroot ]; then
-    debian_chroot=$(cat /etc/debian_chroot)
-fi
-
+#################
+# Aliases
 
 # custom aliases
+
+# alias webhost='ssh vs-ld141.websys.aol.com'
 
 # -> Prevents accidentally clobbering files.
 alias rm='rm -i'
 alias cp='cp -i'
 alias mv='mv -i'
 
-
-# better grep
-alias ack='ack-grep'
+# easier to jump around
+alias ..='cd ..'
 
 # set default editor
-export EDITOR=vim
-if [ -f '/Applications/MacPorts/MacVim.app/Contents/MacOS/MacVim' ] 
+export EDITOR='vim'
+export SUDO_EDITOR='vim'
+if [ -d '/Applications/MacPorts/MacVim.app' ] 
 then 
   alias vim='open -a MacVim'; 
-  EDITOR='open -Wn MacVim';
+  EDITOR='open -a MacVim';
+  SUDO_EDITOR='mvim -f';
 fi 
 
 
@@ -75,26 +65,49 @@ alias grep='grep --color=AUTO'
 alias fgrep='fgrep --color=AUTO'
 
 
-export TERM=xterm-256color
+# Set the window title for screen
+  case $TERM in
+    screen*)
+      # This is the escape sequence ESC k \w ESC \
+      #Use path as title
+      SCREENTITLE='\[\ek\w\e\\\]'
+      #Use program name as title
+      # SCREENTITLE='\[\ek\e\\\]'
+      ;;
+    *)
+      SCREENTITLE=''
+      ;;
+  esac
+
+# Turn off XON/XOFF process control to make <CTRL-s> not hang VIM and Command-T
+# See: https://wincent.com/forums/command-t/topics/430
+# stty -ixon
+export TERM=xterm-color
 
 
-# uncomment for a colored prompt, if the terminal has the capability; turned
-# off by default to not distract the user: the focus in a terminal window
-# should be on the output of commands, not on the prompt
-force_color_prompt=yes
+# SSH PASSPHRASE
+# Using ssh-agent to remember pass phrases
+SSH_ENV="$HOME/.ssh/environment"
 
-if [ -n "$force_color_prompt" ]; then
-    if [ -x /usr/bin/tput ] && tput setaf 1 >&/dev/null; then
-	# We have color support; assume it's compliant with Ecma-48
-	# (ISO/IEC-6429). (Lack of such support is extremely rare, and such
-	# a case would tend to support setf rather than setaf.)
-	color_prompt=yes
-    else
-	color_prompt=
-    fi
+function start_agent {
+  echo "Initializing new SSH agent..."
+  /usr/bin/ssh-agent | sed 's/^echo/#echo/' > "${SSH_ENV}"
+  echo succeeded
+  chmod 600 "${SSH_ENV}"
+  . "${SSH_ENV}" > /dev/null
+  /usr/bin/ssh-add;
+}
+
+# Source SSH settings, if applicable
+if [ -f "${SSH_ENV}" ]; then
+  . "${SSH_ENV}" > /dev/null
+  #ps ${SSH_AGENT_PID} doesn't work under cywgin
+  ps -ef | grep ${SSH_AGENT_PID} | grep ssh-agent$ > /dev/null || {
+    start_agent;
+  }
+else
+  start_agent;
 fi
-
-
 
 set -o vi
 
@@ -114,7 +127,11 @@ prompt
 
 # the most localized path first
 export PATH='.'
+if [ -d '/Users/pkocks/Code/llvm-b2/bin' ] ; then export PATH="$PATH:/Users/pkocks/Code/llvm-b2/bin"; fi
+if [ -d '/usr/local/clang/bin' ] ; then export PATH="$PATH:/usr/local/clang/bin"; fi
 if [ -d '/usr/local/bin' ] ; then export PATH="$PATH:/usr/local/bin"; fi
+if [ -d '/opt/local/sbin' ] ; then export PATH="$PATH:/opt/local/sbin"; fi
+if [ -d '/opt/local/bin' ] ; then export PATH="$PATH:/opt/local/bin"; fi
 if [ -d '/usr/local/sbin' ] ; then export PATH="$PATH:/usr/local/sbin"; fi
 if [ -d '/usr/local/bin' ] ; then export PATH="$PATH:/usr/local/bin"; fi
 if [ -d '/sbin' ] ; then export PATH="$PATH:/sbin"; fi
@@ -122,15 +139,74 @@ if [ -d '/bin' ] ; then export PATH="$PATH:/bin"; fi
 if [ -d '/usr/sbin' ] ; then export PATH="$PATH:/usr/sbin"; fi
 if [ -d '/usr/bin' ] ; then export PATH="$PATH:/usr/bin"; fi
 
+
 export MANPATH='.'
 if [ -d '/opt/local/share/man' ] ; then export MANPATH="$MANPATH:/opt/local/share/man"; fi
 if [ -d '/usr/local/share/man' ] ; then export MANPATH="$MANPATH:/usr/local/share/man"; fi
 if [ -d '/usr/share/man' ] ; then export MANPATH="$MANPATH:/usr/share/man"; fi
 
-# enable programmable completion features (you don't need to enable
-# this, if it's already enabled in /etc/bash.bashrc and /etc/profile
-# sources /etc/bash.bashrc).
-if [ -f /etc/bash_completion ] && ! shopt -oq posix; then
-    . /etc/bash_completion
+# add git command completion
+if [ -f '/opt/local/share/doc/git-core/contrib/completion/git-completion.bash' ]
+then
+  . /opt/local/share/doc/git-core/contrib/completion/git-completion.bash
+fi
+if [ -f '/usr/share/doc/git-1.7.1/contrib/completion/git-completion.bash' ]
+then
+  . /usr/share/doc/git-1.7.1/contrib/completion/git-completion.bash
 fi
 
+if [ -f '/opt/local/bin/clang' ] ; then export CC="/opt/local/bin/clang"; fi
+if [ -f '/opt/local/bin/clang++' ] ; then export CXX="/opt/local/bin/clang++"; fi
+
+function bashtips {
+cat <<EOF
+DIRECTORIES
+-----------
+~-      Previous working directory
+pushd tmp   Push tmp && cd tmp
+popd            Pop && cd
+
+GLOBBING AND OUTPUT SUBSTITUTION
+--------------------------------
+ls a[b-dx]e Globs abe, ace, ade, axe
+ls a{c,bl}e Globs ace, able
+\$(ls)          \`ls\` (but nestable!)
+
+HISTORY MANIPULATION
+--------------------
+!!      Last command
+!?foo           Last command containing \`foo'
+^foo^bar^   Last command containing \`foo', but substitute \`bar'
+!!:0            Last command word
+!!:^            Last command's first argument
+!\$     Last command's last argument
+!!:*            Last command's arguments
+!!:x-y          Arguments x to y of last command
+C-s     search forwards in history
+C-r     search backwards in history
+
+LINE EDITING
+------------
+M-d     kill to end of word
+C-w     kill to beginning of word
+C-k     kill to end of line
+C-u     kill to beginning of line
+M-r     revert all modifications to current line
+C-]     search forwards in line
+M-C-]           search backwards in line
+C-t     transpose characters
+M-t     transpose words
+M-u     uppercase word
+M-l     lowercase word
+M-c     capitalize word
+
+COMPLETION
+----------
+M-/     complete filename
+M-~     complete user name
+M-@     complete host name
+M-\$            complete variable name
+M-!     complete command name
+M-^     complete history
+EOF
+}
