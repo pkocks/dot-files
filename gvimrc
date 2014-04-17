@@ -5,3 +5,5 @@ nnoremap <D-up> :resize -5<cr>
 nnoremap <D-right> :vertical resize +5<cr>
 nnoremap <D-[> :tabp<cr>
 nnoremap <D-]> :tabn<cr>
+set guifont=Source\ Code\ Pro\ Medium:h12
+set background=dark  | colorscheme lunarized 
