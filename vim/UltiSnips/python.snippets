@@ -1,0 +1,6 @@
+
+snippet regex "Regex / Group" b
+${1:match} = re.match(r'(?P<${2:item}>${3:regex}',${4:str})
+if $1:
+    $2 = $1.group('$2')
+endsnippet
