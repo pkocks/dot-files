@@ -46,6 +46,7 @@ set backspace=2
 set ruler
 set number
 " set foldmethod=indent
+set foldlevelstart=20
 
 " Better searching
 set ignorecase

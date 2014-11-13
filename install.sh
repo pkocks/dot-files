@@ -5,7 +5,8 @@ sudo bash -c 'grep -v "^#" $HOME/dot-files/package_list.ubuntu | xargs -t -I {} 
 
 echo "updating vim plugins"
 git submodule init
-git submodule update
+# update submodules to latest stuff
+git submodule update --remote --merge --recursive
 
 echo "linking dots"
 $HOME/dot-files/links.sh
